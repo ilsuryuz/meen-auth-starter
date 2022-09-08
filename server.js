@@ -22,6 +22,20 @@ db.on('disconnected', () => console.log('mongo disconnected'));
 // ** Middleware ** 
 app.use(express.urlencoded({ extended: true}));
 
+// ** session **
+const session = require('express-session');
+app.use(
+    session({
+        secret: process.env.SECRET,
+        resave: false,
+        saveUninitialized: false,
+    })
+)
+
 // ** Routes / Controllers **
 const userController = require('./controllers/users');
 app.use('/users', userController);
+
+// ** session controller **
+const sessionsController = require('./controllers/sessions');
+app.use('/sessions', sessionsController);
